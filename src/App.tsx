@@ -1,13 +1,21 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar';
 import { User } from './models/User';
+import Home from './pages/Home';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import { AuthService } from './services/AuthService';
 
 interface State {
-  user: User
+  user: User | undefined
 }
 
 class App extends React.Component<{}, State> {
+
+  state: State = {
+    user: undefined
+  };
 
   private authService: AuthService = new AuthService();
 
@@ -19,15 +27,29 @@ class App extends React.Component<{}, State> {
 
   render() {
     return (
-      <>
-        <Login
-          authService={this.authService}
-          setUser={this.setUser}
-        />
-        <h1>App</h1>
-      </>
+      <div className='wrapper'>
+        <BrowserRouter >
+          <NavBar user={this.state.user}/>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route
+              path='/login'
+              element={<Login
+                authService={this.authService}
+                setUser={this.setUser}
+              />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
     );
   }
 };
+/* 
+<Login
+  authService={this.authService}
+  setUser={this.setUser}
+/> */
 
 export default App;

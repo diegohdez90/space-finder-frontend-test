@@ -5,7 +5,7 @@ interface State {
   user: User | undefined;
 }
 
-class Home extends Component<{}, State> {
+class Home extends Component<{}, {}> {
 
 
   render() {

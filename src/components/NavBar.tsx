@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { User } from '../models/User';
 import { Link } from 'react-router-dom';
-import Home from '../pages/Home';
+
 interface Props {
   user: User | undefined
 }
