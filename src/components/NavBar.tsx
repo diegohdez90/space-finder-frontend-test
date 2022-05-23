@@ -10,12 +10,16 @@ class NavBar extends Component<Props> {
   render() {
     let loginLogout: any;
     if (this.props.user) {
-      loginLogout = <Link to='/logout'>Logout</Link>
+      loginLogout = <Link to='/logout' style={{
+        float: 'right'
+      }}>Logout</Link>
     } else {
-      loginLogout = <Link to='/login'>Login</Link>
+      loginLogout = <Link to='/login' style={{
+        float: 'right'
+      }}>Login</Link>
     }
     return (
-      <div>
+      <div className='navbar'>
         <Link to='/'>Home</Link>
         <Link to='/profile'>Profile</Link>
         {

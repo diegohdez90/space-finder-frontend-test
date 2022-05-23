@@ -46,10 +46,5 @@ class App extends React.Component<{}, State> {
     );
   }
 };
-/* 
-<Login
-  authService={this.authService}
-  setUser={this.setUser}
-/> */
 
 export default App;
