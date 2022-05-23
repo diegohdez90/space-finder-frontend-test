@@ -11,12 +11,21 @@ class App extends React.Component<{}, State> {
 
   private authService: AuthService = new AuthService();
 
+  private setUser = (user: User) => {
+    this.setState({
+      user: user
+    });
+  }
+
   render() {
     return (
-      <div>
-        <Login authService={this.authService} />
+      <>
+        <Login
+          authService={this.authService}
+          setUser={this.setUser}
+        />
         <h1>App</h1>
-      </div>
+      </>
     );
   }
 };

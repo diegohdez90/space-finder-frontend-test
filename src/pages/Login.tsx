@@ -3,7 +3,8 @@ import { AuthService } from '../services/AuthService';
 import { User } from '../models/User';
 
 interface Props {
-  authService: AuthService
+  authService: AuthService,
+  setUser: (user: User) => void
 }
 
 interface State {
@@ -42,15 +43,17 @@ class Login extends Component<Props, State> {
     this.props
       .authService
       .login(this.state.username, this.state.password)
-      .then(res => {
-        this.setState({
-          loginSuccessfull: true
-        });
-      })
-      .catch(() => {
-        this.setState({
-          loginSuccessfull: false
-        });
+      .then((res) => {
+        if (res) {
+          this.setState({
+            loginSuccessfull: true
+          });
+          this.props.setUser(res); 
+        } else {
+          this.setState({
+            loginSuccessfull: false
+          });
+        }
       });
   }
 
