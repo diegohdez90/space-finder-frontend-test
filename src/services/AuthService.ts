@@ -4,13 +4,13 @@ export class AuthService {
     public async login(
         username: string,
         password: string
-    ) : Promise<User | undefined> {
+    ) : Promise<User | Error> {
         if(username === 'user' && password === '1234') {
             return {
                 name: 'John Doe',
                 email: 'jdoe@mail.com'
             }
         }
-        return undefined;
+        throw new Error('Credentials incorrect');
     }
 }

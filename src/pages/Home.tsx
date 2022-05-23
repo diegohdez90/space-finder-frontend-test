@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { User } from '../models/User'
-import { AuthService } from '../services/AuthService';
 
 interface State {
   user: User | undefined;
@@ -8,7 +7,6 @@ interface State {
 
 class Home extends Component<{}, State> {
 
-  private authService: AuthService = new AuthService();
 
   render() {
     return (
