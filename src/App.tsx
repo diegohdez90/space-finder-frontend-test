@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import { User } from './models/User';
 import Home from './pages/Home';
@@ -28,6 +28,9 @@ class App extends React.Component<{}, State> {
   }
 
   render() {
+
+    const { user } = this.state;
+
     return (
       <div className='wrapper'>
         <CustomRouter
@@ -36,7 +39,13 @@ class App extends React.Component<{}, State> {
           <NavBar user={this.state.user}/>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route
+              path='/profile'
+              element={<Profile
+                authService={this.authService}
+                user={user}
+              />}
+            />
             <Route
               path='/login'
               element={<Login
