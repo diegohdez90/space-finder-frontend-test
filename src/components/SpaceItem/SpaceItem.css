@@ -1,17 +1,17 @@
 .spaceComponent {
-    display: inline-block;
-    width: 450px;
-    margin: 5px;
-    overflow: auto;
+  display: inline-block;
+  width: 450px;
+  margin: 5px;
+  overflow: auto;
 }
 
 img {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .name {
-    text-align: center;
-    text-transform: uppercase;
-    color: blueviolet;
+  text-align: center;
+  text-transform: uppercase;
+  color: blueviolet;
 }
