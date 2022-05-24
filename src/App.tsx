@@ -5,8 +5,10 @@ import { User } from './models/User';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import Spaces from './pages/Spaces';
 import CustomRouter from './router/CustomRouter';
 import { AuthService } from './services/AuthService';
+import { DataService } from './services/DataService';
 import history from './utils/history';
 
 interface State {
@@ -20,6 +22,7 @@ class App extends React.Component<{}, State> {
   };
 
   private authService: AuthService = new AuthService();
+  private dataService: DataService = new DataService();
 
   private setUser = (user: User) => {
     this.setState({
@@ -51,6 +54,12 @@ class App extends React.Component<{}, State> {
               element={<Login
                 authService={this.authService}
                 setUser={this.setUser}
+              />}
+            />
+            <Route
+              path='/spaces'
+              element={<Spaces
+                dataService={this.dataService}
               />}
             />
           </Routes>
