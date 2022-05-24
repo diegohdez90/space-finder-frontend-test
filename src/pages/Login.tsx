@@ -1,10 +1,11 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { AuthService } from '../services/AuthService';
 import { User } from '../models/User';
+import history from '../utils/history';
 
 interface Props {
   authService: AuthService,
-  setUser: (user: User) => void
+  setUser: (user: User) => void,
 }
 
 interface State {
@@ -48,7 +49,8 @@ class Login extends Component<Props, State> {
           this.setState({
             loginSuccessfull: true
           });
-          this.props.setUser(res); 
+          this.props.setUser(res);
+          history.push('/profile');
         } else {
           this.setState({
             loginSuccessfull: false
