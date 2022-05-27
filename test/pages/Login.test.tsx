@@ -1,6 +1,12 @@
 import ReactDOM from 'react-dom';
 import Login from '../../src/pages/Login';
-import { fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
+import { User } from '../../src/models/User';
+
+const user: User = {
+    name: 'John Doe',
+    email: 'jdoe@mail.com'
+};
 
 describe('Login component test suite', () => {
 
@@ -57,13 +63,40 @@ describe('Login component test suite', () => {
 
         fireEvent.submit(submitButton[0]);
 
-        const res = await expect(authServiceMock.login).toBeCalledWith(
+        expect(authServiceMock.login).toBeCalledWith(
             'user',
             '1234'
         );
+    });
 
-        console.log('res', res);
-        
+    test('Correctly handles login access', async () => {
+        authServiceMock.login.mockResolvedValueOnce(user);
+        const inputs = container.querySelectorAll('input');
+        const submitButton = container.querySelectorAll('button');
+
+        const username = inputs[0];
+        const password = inputs[1];
+
+        fireEvent.change(username, {
+            target: {
+                value: 'user'
+            }   
+        });
+
+        fireEvent.change(password, {
+            target: {
+                value: '1234'
+            }   
+        });
+
+        fireEvent.click(submitButton[0]);
+
+        const status = await waitFor(() => {
+            container.querySelector('div.login-message');
+        });
+
+        expect(status).toBeInTheDocument();
+        expect(status.querySelector('span')).toHaveTextContent('Login successful');
     });
 
     afterEach(() => {
