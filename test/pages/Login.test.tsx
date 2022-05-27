@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import Login from '../../src/pages/Login';
+import { fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
 
 describe('Login component test suite', () => {
 
@@ -33,6 +34,36 @@ describe('Login component test suite', () => {
 
         const span = document.querySelector('div.login-message');
         expect(span).not.toBeInTheDocument();
+    });
+
+    test('Passes credentials correctly', async() => {
+        const inputs = container.querySelectorAll('input');
+        const submitButton = container.querySelectorAll('button');
+
+        const username = inputs[0];
+        const password = inputs[1];
+
+        fireEvent.change(username, {
+            target: {
+                value: 'user'
+            }   
+        });
+
+        fireEvent.change(password, {
+            target: {
+                value: '1234'
+            }   
+        });
+
+        fireEvent.submit(submitButton[0]);
+
+        const res = await expect(authServiceMock.login).toBeCalledWith(
+            'user',
+            '1234'
+        );
+
+        console.log('res', res);
+        
     });
 
     afterEach(() => {

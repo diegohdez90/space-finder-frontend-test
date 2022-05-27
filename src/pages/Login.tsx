@@ -36,27 +36,26 @@ class Login extends Component<Props, State> {
     });
   }
 
-  private onLoginEvent = (e: FormEvent<HTMLFormElement>) => {
+  private onLoginEvent = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     this.setState({
       loginAttempted: true
     });
-    this.props
+    const res = await this.props
       .authService
-      .login(this.state.username, this.state.password)
-      .then((res) => {
-        if (res) {
-          this.setState({
-            loginSuccessfull: true
-          });
-          this.props.setUser(res);
-          history.push('/profile');
-        } else {
-          this.setState({
-            loginSuccessfull: false
-          });
-        }
-      });
+      .login(this.state.username, this.state.password);
+    
+      if (res) {
+        this.setState({
+          loginSuccessfull: true
+        });
+        this.props.setUser(res);
+        history.push('/profile');
+      } else {
+        this.setState({
+          loginSuccessfull: false
+        });
+      }
   }
 
   render() {
@@ -101,6 +100,7 @@ class Login extends Component<Props, State> {
             onChange={this.onChangePassword}
           />
           <button
+            role='button'
             type='submit'
           >Login</button>
           {
