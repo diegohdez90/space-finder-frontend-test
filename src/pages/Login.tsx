@@ -71,13 +71,18 @@ class Login extends Component<Props, State> {
 
     if(loginAttempted) {
       if (loginSuccessfull) {
-        loginMessage = <span>Login successfull</span>
+        loginMessage = <div className='login-message'>
+            <span>Login successfull</span>
+          </div>;
       } else {
-        loginMessage = <span>Login failed</span>
+        loginMessage = <div className='login-message'>
+          <span>Login failed</span>
+        </div>;
       }
     }
     return (
       <div>
+        <h2>Login to spaces</h2>
         <form
           onSubmit={this.onLoginEvent}
         >
