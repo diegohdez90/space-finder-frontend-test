@@ -107,7 +107,6 @@ describe('Login component test suite', () => {
         });
 
         expect(status?.node).toBeInTheDocument();
-
         expect(status?.message).toHaveTextContent('Login successful');
         expect(setUserMock).toBeCalledWith(someUser);
         expect(historyMock.push).toBeCalledWith('/profile');
