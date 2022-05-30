@@ -4,7 +4,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import { User } from '../../src/models/User';
 import history from '../../src/utils/history';
 
-const user: User = {
+const someUser: User = {
     name: 'someUser',
     email: 'someEmail'
 };
@@ -74,7 +74,7 @@ describe('Login component test suite', () => {
     });
 
     test('Correctly handles login success', async () => {
-        authServiceMock.login.mockResolvedValueOnce(user);
+        authServiceMock.login.mockResolvedValueOnce(someUser);
         const inputs = document.querySelectorAll('input');
         const submitButton = document.querySelectorAll('button');
 
@@ -90,10 +90,6 @@ describe('Login component test suite', () => {
                 value: 'somePassword'
             }   
         });
-
-        console.log(inputs);
-        console.log(submitButton);
-        
 
         fireEvent.submit(submitButton[0]);
         
@@ -111,7 +107,7 @@ describe('Login component test suite', () => {
         expect(status?.node).toBeInTheDocument();
 
         expect(status?.message).toHaveTextContent('Login successful');
-        expect(status?.node).toBeCalledWith(user);
+        expect(setUserMock).toBeCalledWith(someUser);
         expect(historyMock.push).toBeCalledWith('/profile');
     });
 
