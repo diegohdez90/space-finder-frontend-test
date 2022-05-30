@@ -1,11 +1,12 @@
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import Login from '../../src/pages/Login';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { User } from '../../src/models/User';
+import history from '../../src/utils/history';
 
 const user: User = {
-    name: 'John Doe',
-    email: 'jdoe@mail.com'
+    name: 'someUser',
+    email: 'someEmail'
 };
 
 describe('Login component test suite', () => {
@@ -15,6 +16,9 @@ describe('Login component test suite', () => {
         login: jest.fn()
     };
     const setUserMock = jest.fn();
+    const historyMock = history;
+
+    history.push = jest.fn();
 
     beforeEach(()=> {
         container = document.createElement('div');
@@ -51,52 +55,100 @@ describe('Login component test suite', () => {
 
         fireEvent.change(username, {
             target: {
-                value: 'user'
-            }   
+                value: 'someUser'
+            }
         });
 
         fireEvent.change(password, {
             target: {
-                value: '1234'
+                value: 'somePassword'
             }   
         });
 
         fireEvent.submit(submitButton[0]);
 
         expect(authServiceMock.login).toBeCalledWith(
-            'user',
-            '1234'
+            'someUser',
+            'somePassword'
         );
     });
 
-    test('Correctly handles login access', async () => {
+    test('Correctly handles login success', async () => {
         authServiceMock.login.mockResolvedValueOnce(user);
-        const inputs = container.querySelectorAll('input');
-        const submitButton = container.querySelectorAll('button');
+        const inputs = document.querySelectorAll('input');
+        const submitButton = document.querySelectorAll('button');
 
         const username = inputs[0];
         const password = inputs[1];
 
         fireEvent.change(username, {
-            target: {
-                value: 'user'
-            }   
+            target: 'someUser'
         });
 
         fireEvent.change(password, {
             target: {
-                value: '1234'
+                value: 'somePassword'
             }   
         });
 
-        fireEvent.click(submitButton[0]);
+        console.log(inputs);
+        console.log(submitButton);
+        
 
+        fireEvent.submit(submitButton[0]);
+        
         const status = await waitFor(() => {
-            container.querySelector('div.login-message');
+            const message = container.querySelector('div.login-message');
+            if (message?.children.length == 1) {
+                return {
+                    node: message || null,
+                    message: message?.querySelector('span'),
+                }
+            }
+            return null;
         });
 
-        expect(status).toBeInTheDocument();
-        expect(status.querySelector('span')).toHaveTextContent('Login successful');
+        expect(status?.node).toBeInTheDocument();
+
+        expect(status?.message).toHaveTextContent('Login successful');
+        expect(status?.node).toBeCalledWith(user);
+        expect(historyMock.push).toBeCalledWith('/profile');
+    });
+
+
+    test('Correctly handles login failure', async () => {
+        authServiceMock.login.mockResolvedValueOnce(undefined);
+        const inputs = document.querySelectorAll('input');
+        const submitButton = document.querySelectorAll('button');
+
+        const username = inputs[0];
+        const password = inputs[1];
+
+        fireEvent.change(username, {
+            target: 'someUser'
+        });
+
+        fireEvent.change(password, {
+            target: {
+                value: 'somePassword'
+            }   
+        });
+
+        fireEvent.submit(submitButton[0]);
+        
+        const status = await waitFor(() => {
+            const message = container.querySelector('div.login-message');
+            if (message?.children.length == 1) {
+                return {
+                    node: message || null,
+                    message: message?.querySelector('span'),
+                }
+            }
+            return null;
+        });
+
+        expect(status?.node).toBeInTheDocument();
+        expect(status?.message).toHaveTextContent('Login failed');
     });
 
     afterEach(() => {

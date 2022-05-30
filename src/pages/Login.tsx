@@ -71,7 +71,7 @@ class Login extends Component<Props, State> {
     if(loginAttempted) {
       if (loginSuccessfull) {
         loginMessage = <div className='login-message'>
-            <span>Login successfull</span>
+            <span>Login successful</span>
           </div>;
       } else {
         loginMessage = <div className='login-message'>
