@@ -42,7 +42,7 @@ describe('Login component test suite', () => {
         expect(submitButton).toHaveLength(1);
         expect(submitButton[0].type).toBe('submit');
 
-        const span = document.querySelector('div.login-message');
+        const span = container.querySelector('div.login-message');
         expect(span).not.toBeInTheDocument();
     });
 
@@ -75,14 +75,16 @@ describe('Login component test suite', () => {
 
     test('Correctly handles login success', async () => {
         authServiceMock.login.mockResolvedValueOnce(someUser);
-        const inputs = document.querySelectorAll('input');
-        const submitButton = document.querySelectorAll('button');
+        const inputs = container.querySelectorAll('input');
+        const submitButton = container.querySelectorAll('button');
 
         const username = inputs[0];
         const password = inputs[1];
 
         fireEvent.change(username, {
-            target: 'someUser'
+            target: {
+                value: 'someUser'
+            }
         });
 
         fireEvent.change(password, {
@@ -114,14 +116,16 @@ describe('Login component test suite', () => {
 
     test('Correctly handles login failure', async () => {
         authServiceMock.login.mockResolvedValueOnce(undefined);
-        const inputs = document.querySelectorAll('input');
-        const submitButton = document.querySelectorAll('button');
+        const inputs = container.querySelectorAll('input');
+        const submitButton = container.querySelectorAll('button');
 
         const username = inputs[0];
         const password = inputs[1];
 
         fireEvent.change(username, {
-            target: 'someUser'
+            target: {
+                value: 'someUser'
+            }
         });
 
         fireEvent.change(password, {

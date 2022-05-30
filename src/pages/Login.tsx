@@ -100,7 +100,6 @@ class Login extends Component<Props, State> {
             onChange={this.onChangePassword}
           />
           <button
-            role='button'
             type='submit'
           >Login</button>
           {

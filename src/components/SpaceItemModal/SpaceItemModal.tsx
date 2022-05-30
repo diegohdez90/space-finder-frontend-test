@@ -7,10 +7,6 @@ interface Props {
   close: () => void
 }
 
-interface State {
-  
-}
-
 class SpaceItemModal extends Component<Props> {
 
   private onClose = (e: React.MouseEvent<HTMLElement>) => {
