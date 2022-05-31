@@ -4,4 +4,5 @@ import App from './App';
 
 import './index.css';
 
+/* istanbul ignore file*/
 ReactDOM.render(<App />, document.querySelector('#root'));

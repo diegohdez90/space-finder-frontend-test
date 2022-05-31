@@ -24,7 +24,7 @@ class SpaceItemModal extends Component<Props> {
           <h5 className='modalText'>{
             this.props.content
           }</h5>
-          <button onClick={this.onClose}>OK, close</button>
+          <button className='modalButton' onClick={this.onClose}>OK, close</button>
         </div>
       </div>
     )

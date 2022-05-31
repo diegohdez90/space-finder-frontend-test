@@ -33,6 +33,10 @@ export class DataService {
     }
 
     public async reserveSpace(spaceId: string): Promise<string | undefined> {
-        return this.spaces.find(space => space.spaceId === spaceId)?.spaceId || undefined;
+        const res = this.spaces.find(space => space.spaceId === spaceId);
+        if (res) {
+            return '5555';
+        }
+        return undefined;
     }
 }

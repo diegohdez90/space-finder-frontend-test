@@ -95,19 +95,8 @@ describe('Login component test suite', () => {
 
         fireEvent.submit(submitButton[0]);
         
-        const status = await waitFor(() => {
-            const message = container.querySelector('div.login-message');
-            if (message?.children.length == 1) {
-                return {
-                    node: message || null,
-                    message: message?.querySelector('span'),
-                }
-            }
-            return null;
-        });
-
-        expect(status?.node).toBeInTheDocument();
-        expect(status?.message).toHaveTextContent('Login successful');
+        await waitFor(() => expect(container.querySelectorAll('div.login-message')).toHaveLength(1));
+        await waitFor(() => expect(container.querySelector('div.login-message span')).toHaveTextContent('Login successful'));
         expect(setUserMock).toBeCalledWith(someUser);
         expect(historyMock.push).toBeCalledWith('/profile');
     });

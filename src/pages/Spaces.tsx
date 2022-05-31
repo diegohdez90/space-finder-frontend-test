@@ -33,23 +33,21 @@ class Spaces extends Component<Props, State> {
       });
   }
 
-  onReserveSpace = (spaceId: string) => {
-    this.props
+  onReserveSpace = async (spaceId: string) => {
+    const res = await this.props
       .dataService
-      .reserveSpace(spaceId)
-      .then(res => {
-        if (res) {
-          this.setState({
-            showModal: true,
-            modalContent: `You reserved space ${res}`
-          });
-        } else {
-          this.setState({
-            showModal: true,
-            modalContent: 'You can\'t reserve this space'
-          });
-        }
+      .reserveSpace(spaceId);
+    if (res) {
+      this.setState({
+        showModal: true,
+        modalContent: `You reserved the space with id ${spaceId}  and got the reservation number ${res}`
       });
+    } else {
+      this.setState({
+        showModal: true,
+        modalContent: `You can\'t reserve the space with id ${spaceId}`
+      });
+    }
   }
 
   private onClose = () => {
@@ -71,6 +69,7 @@ class Spaces extends Component<Props, State> {
         {
           this.state.spaces && this.state.spaces.map(space => (
             <SpaceItem
+              key={space.spaceId}
               spaceId={space.spaceId}
               name={space.name}
               location={space.location}

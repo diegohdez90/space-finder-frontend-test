@@ -15,6 +15,7 @@ interface State {
   user: User | undefined
 }
 
+/* istanbul ignore file */
 class App extends React.Component<{}, State> {
 
   state: State = {
